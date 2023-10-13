@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>One Tap Safety</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .blue-background {
+            background-color: blue;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .black-text {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .blue-circle-button {
+            background-color: blue;
+            color: white;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+            margin: 20px 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .grey-background {
+            background-color: #ccc;
+            color: black;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .undo-button {
+            background-color: red;
+            color: white;
+            font-size: 24px;
+            padding: 20px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .countdown {
+            font-size: 36px;
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-background">One Tap</div>
+    <div class="black-text">Once pushed, the local police department will be notified of your location.</div>
+    <button class="blue-circle-button" id="notifyButton">Tap Here</button>
+    <div class="grey-background" id="notification" style="display: none;">The Police have been notified.</div>
+    <div class="countdown" id="countdownDisplay" style="display: none;">60</div>
+    <div class="undo-button" id="undoButton" style="display: none;">Undo</div>
+
+    <script>
+        const notifyButton = document.getElementById("notifyButton");
+        const notification = document.getElementById("notification");
+        const countdownDisplay = document.getElementById("countdownDisplay");
+        const undoButton = document.getElementById("undoButton");
+
+        notifyButton.onclick = function () {
+            notification.style.display = "block";
+            countdownDisplay.style.display = "block";
+            undoButton.style.display = "block";
+
+            let countdown = 60;
+            countdownDisplay.textContent = countdown;
+
+            const countdownInterval = setInterval(function () {
+                countdown--;
+                countdownDisplay.textContent = countdown;
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        };
+
+        undoButton.onclick = function () {
+            notifyButton.style.display = "block";
+           
+        };
+    </script>
+</body>
+</html>
+
