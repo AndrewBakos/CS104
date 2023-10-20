@@ -1,107 +1,162 @@
 <!DOCTYPE html>
 <html>
+
+
 <head>
-    <title>One Tap Safety</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
+   <meta name="viewport" content="width=device-width">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+   <style>
+       .banner {
+           background-color: blue;
+           color: white;
+ 
+           font-family: 'Anton', sans-serif;
+           font-size: 30px;
+           text-align: center;
+           align-items: center;
+           margin-top: -100px;
 
-        .blue-background {
-            background-color: blue;
-            color: white;
-            font-weight: bold;
-            font-size: 24px;
-            padding: 10px;
-            border-radius: 5px;
-            display: inline-block;
-        }
 
-        .black-text {
-            font-size: 16px;
-            margin: 10px 0;
-        }
+       }
+.bluebg {
+   background-color: blue;
+}
+       .settingsicon {
+           font-size: 24px;
+       color: whitesmoke;
+padding: 20px;
+       }
 
-        .blue-circle-button {
-            background-color: blue;
-            color: white;
-            font-size: 24px;
-            border: none;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            line-height: 120px;
-            margin: 20px 0;
-            text-align: center;
-            cursor: pointer;
-        }
 
-        .grey-background {
-            background-color: #ccc;
-            color: black;
-            font-size: 24px;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 20px 0;
-            display: none;
-        }
 
-        .undo-button {
-            background-color: red;
-            color: white;
-            font-size: 24px;
-            padding: 20px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none;
-        }
 
-        .countdown {
-            font-size: 36px;
-            margin: 20px 0;
-            display: none;
-        }
-    </style>
+       .mapcontainer {
+           width: 100%;
+     margin-top: -40px;
+           overflow: hidden;
+       }
+
+
+       .map {
+           width: 100%;
+           object-fit: cover;
+
+
+       }
+
+
+
+
+       .question {
+           background-color: orange;
+           color: black;
+           font-family: 'Roboto', sans-serif;
+           font-size: 10px;
+           text-align: center;
+           padding: 5px;
+       }
+       .bluecircle {
+           text-align: center;
+       }
+
+
+       .innercircle {
+           display: inline-block;
+           background-color: blue;
+           color: white;
+           text-align: center;
+           border-radius: 50%;
+           width: 180px;
+           height: 180px;
+           font-size: 24px;
+           line-height: 180px;
+           margin-top: 40px;
+           cursor: pointer;
+           align-items: center;
+           font-family: 'Roboto', sans-serif;
+       }
+
+
+ 
+       .policeiscoming {
+           background-color: yellow;
+           color: black;
+           margin-top: 40px;
+
+
+           font-family: 'Roboto', sans-serif;
+           font-size: 10px;
+           text-align: center;
+           padding: 5px;
+       }
+   </style>
 </head>
+
+
 <body>
-    <div class="blue-background">One Tap</div>
-    <div class="black-text">Once pushed, the local police department will be notified of your location.</div>
-    <button class="blue-circle-button" id="notifyButton">Tap Here</button>
-    <div class="grey-background" id="notification" style="display: none;">The Police have been notified.</div>
-    <div class="countdown" id="countdownDisplay" style="display: none;">60</div>
-    <div class="undo-button" id="undoButton" style="display: none;">Undo</div>
+   <div class="bluebg">
+   <div class="settingsicon">&#9881;</div>
+   <div class="banner" >
+    
+<div style="text-align: center;">
+       <h1>One Tap</h1>
+</div>
+   </div>
+</div>
 
-    <script>
-        const notifyButton = document.getElementById("notifyButton");
-        const notification = document.getElementById("notification");
-        const countdownDisplay = document.getElementById("countdownDisplay");
-        const undoButton = document.getElementById("undoButton");
 
-        notifyButton.onclick = function () {
-            notification.style.display = "block";
-            countdownDisplay.style.display = "block";
-            undoButton.style.display = "block";
+   <div class="mapcontainer">
+       <img src="image.png" class="map">
+   </div>
 
-            let countdown = 60;
-            countdownDisplay.textContent = countdown;
 
-            const countdownInterval = setInterval(function () {
-                countdown--;
-                countdownDisplay.textContent = countdown;
-                if (countdown === 0) {
-                    clearInterval(countdownInterval);
-                }
-            }, 1000);
-        };
+   <div class="question">
+       <h2>Are you feeling unsafe?</h2>
+   </div>
 
-        undoButton.onclick = function () {
-            notifyButton.style.display = "block";
-           
-        };
-    </script>
+
+   <div class="bluecircle">
+       <div class="innercircle" id="innercircle">Tap here</div>
+   </div>
+
+
+   <div class="policeiscoming">
+       <h3>The police will be notified immediately</h3>
+   </div>
+
+
+   <script>
+
+
+       let countdown = 60;
+       countdownCircle = document.getElementById("innercircle");
+
+
+       countdownCircle.addEventListener("click", startCountdown);
+
+
+       function startCountdown() {
+           countdownCircle.removeEventListener("click", startCountdown);
+
+
+           const countdownInterval = setInterval(function () {
+               countdown--;
+               countdownCircle.innerText = countdown;
+               if (countdown <= 0) {
+                   clearInterval(countdownInterval);
+                   countdownCircle.innerText = "The police is here!";
+              
+               }
+           }, 1000);
+       }
+   </script>
 </body>
+
+
 </html>
 
